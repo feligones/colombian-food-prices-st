@@ -12,6 +12,8 @@ zeep = "*"
 unidecode = "*"
 nltk = "*"
 python-dotenv = "*"
+plotly = "*"
+watchdog = "*"
 
 [dev-packages]
 

@@ -62,29 +62,3 @@ def clean_text(text):
     clean_text = re.sub(r'[^\w\s]', '', clean_text)
     clean_text = ' '.join(word_tokenize(clean_text))
     return clean_text
-
-def load_data_s3():
-    # Load ENV secrets
-    load_dotenv()
-    AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
-    AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
-    AWS_BUCKET_NAME = os.getenv("AWS_BUCKET_NAME")
-    AWS_PROJECT_PATH = os.getenv("AWS_PROJECT_PATH")
-
-    # Create an S3 client
-    s3_client = boto3.client(
-        's3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY
-    )
-
-    # Load the dataset from S3
-    objects = s3_client.list_objects_v2(Bucket=AWS_BUCKET_NAME, Prefix = AWS_PROJECT_PATH)
-    pqt_objects = [obj for obj in objects['Contents'] if obj['Key'].endswith('.parquet')]
-    last_pqt_object = sorted(pqt_objects, key=lambda x: x['LastModified'], reverse=True)[0]
-
-    s3_client.download_file(Filename = 'data.parquet', Bucket=AWS_BUCKET_NAME, Key=last_pqt_object['Key'])
-
-    df = pd.read_parquet('data.parquet')
-
-    os.remove('data.parquet')
-
-    return df
