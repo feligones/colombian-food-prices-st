@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 
 # Importing custom modules
 from conf import utils as uts
-from conf import settings as sts
 
 sipsa_link = "https://www.dane.gov.co/index.php/estadisticas-por-tema/agropecuario/sistema-de-informacion-de-precios-sipsa/servicio-web-para-consulta-de-la-base-de-datos-de-sipsa"
 
@@ -51,7 +50,10 @@ def load_and_process_data():
 # Set Streamlit app title and layout
 st.title("Food Price Tracker at Colombian Wholesale Markets \U0001F1E8\U0001F1F4")
 
-# English text
+# Add caption
+st.caption("by: Felipe Gonzalez Esquivel - Data Scientist @ Factored.ai | Economist")
+
+# Add App description
 st.markdown(
     f"""
     [ENG]
@@ -73,7 +75,6 @@ st.markdown(
     """
 )
 
-
 # Load Prices Dataframe
 prices_dataframe = load_and_process_data()
 
@@ -86,7 +87,8 @@ most_important_markets = [
     'medellin central mayorista de antioquia', 
     'bogota dc corabastos',
     'cucuta cenabastos',
-    'barranquilla barranquillita'
+    'barranquilla barranquillita',
+    'cali cavasa'
 ]
 
 # Select market using a dropdown
