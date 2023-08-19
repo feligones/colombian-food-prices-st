@@ -39,6 +39,8 @@ def load_and_process_data():
     pqt_objects = [obj for obj in objects['Contents'] if obj['Key'].endswith('.parquet')]
     last_pqt_object = sorted(pqt_objects, key=lambda x: x['LastModified'], reverse=True)[0]
 
+    print(last_pqt_object)
+
     s3_client.download_file(Filename = 'data.parquet', Bucket=AWS_BUCKET_NAME, Key=last_pqt_object['Key'])
 
     df = pd.read_parquet('data.parquet')
