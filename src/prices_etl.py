@@ -20,6 +20,8 @@ s3_client = boto3.client(
 prices_dataframe = uts.load_prices_dataframe()
 prices_dataframe.drop_duplicates(subset = ['date', 'product', 'market'], inplace=True)
 
+print(prices_dataframe['market'].nunique(), prices_dataframe['product'].nunique())
+
 print("Data load: Done!")
 
 
